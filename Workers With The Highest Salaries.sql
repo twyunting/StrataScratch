@@ -1,3 +1,5 @@
+/* test a command line */
+
 with tmp as(
 
 select worker_title, max(salary) as salary from worker W
