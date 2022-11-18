@@ -1,6 +1,6 @@
 USE [Z_PAPI_PROD]
 GO
-/****** Object:  StoredProcedure [dbo].[spGetPortfolioImpactMasterTable]    Script Date: 11/18/2022 5:42:47 PM ******/
+/****** Object:  StoredProcedure [dbo].[spGetPortfolioImpactMasterTable]    Script Date: 11/18/2022 5:44:19 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -24,8 +24,8 @@ AS
 --	2020-05-14	Ming Tsai	Added
 --	2020-08-17	Ming Tsai	Script revised in template
 --	2020-09-24	Ming Tsai	##DB_NAME## used to map to current DB
---	2022-11-08  Yunting Chiu  Revise REPLACE term to ensure [EdmDataSource] can be excatly matched
---	2022-11-17  Yunting Chiu  Add EQ conditions to [AnalysisName] term
+--	2022-11-08	Yunting Chiu	Revise REPLACE term to ensure [EdmDataSource] can be excatly matched
+--	2022-11-17	Yunting Chiu	Add EQ conditions to [AnalysisName] term
 --
 -----------------------------------------------------------------------------------------------------------------
 BEGIN
