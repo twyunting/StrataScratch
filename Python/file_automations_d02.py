@@ -68,6 +68,7 @@ for key, value in res.items():
                     os.mkdir(subFolder)
     elif key.count("_OP") == 1 and len(re.findall("_R[0-9]+_", key)) == 0 and not os.path.exists(os.path.join(destination_path, value, "Orginal")):
         Org_folder = os.path.join(destination_path, value, "Orginal")
+        os.mkdir(Org_folder)
         if os.path.exists(Org_folder):
             for i in range(len(subFolders)):
                     subFolder = os.path.join(Org_folder, subFolders[i])
