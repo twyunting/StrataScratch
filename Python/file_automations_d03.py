@@ -9,8 +9,7 @@ import os
 import re
 import shutil
 import glob
-"""
-"""
+
 # folder paths
 source_path = r'U:\WORKS\Acc_Tools\PJAC06 - Files_Automation\JEM_test_files\JEM2022\source'
 destination_path = r'U:\WORKS\Acc_Tools\PJAC06 - Files_Automation\JEM_test_files\JEM2022\destination'
@@ -76,17 +75,22 @@ for key, value in res.items():
                     subFolder = os.path.join(Org_folder, subFolders[i])
                     os.mkdir(subFolder)
 
+
 for key, value in res.items():
     for file in glob.glob(os.path.join(source_path, key, '*.xlsx')):
+        #file = file.replace(os.sep, "/")
         #print(file)
         excelFileName = str(os.path.split(file)[1])
         cur_dir = glob.glob(os.path.join(destination_path, value, '*', 'Final'))
         # convert a list to a string
         cur_dir = ' '.join(map(str, cur_dir))
-        #print(type(cur_dir))
-        cur_file = glob.glob(os.path.join(destination_path, value, '*', 'Final', excelFileName))
+        #cur_dir = cur_dir.replace(os.sep, "/")
+        #print(cur_dir)
+        cur_file = glob.glob(os.path.join(destination_path, value, '**', 'Final', '*.xlsx'))
         cur_file = ' '.join(map(str, cur_file))
-        #print(cur_file)
+        #cur_file = cur_file.replace(os.sep, "/")
+
+        print(cur_file)
         #print(excelFileName)
         #print(os.path.split(file)[1])
         #print(os.path.join(destination_path, value, "Original", "Final", os.path.basename(file)))
@@ -96,14 +100,14 @@ for key, value in res.items():
         #if file not in cur_file:
             #shutil.copy(file, cur_dir)
             #print(file)
-        if not os.path.exists(cur_file):
-            shutil.copy(file, cur_dir)
+        #if not os.path.exists(cur_file):
+            #shutil.copyfile(file, cur_dir)
+            #print(cur_dir)
 
 #if subFolders[i] == "Final" and not os.path.exists(os.path.join(Rs_folder,"Final", os.path.basename(file))):
 #shutil.copy(file, os.path.join(Rs_folder, "Final"))
 #if not os.path.exists(glob.glob(os.path.join(Rs_folder, "Final", "*.xlsx"))):
 #shutil.copy2(file, os.path.join(Rs_folder, subFolders[i]))
-
 
 print("ENDEND!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 """
@@ -121,4 +125,3 @@ References
 11. https://www.earthdatascience.org/courses/intro-to-earth-data-science/python-code-fundamentals/work-with-files-directories-paths-in-python/os-glob-manipulate-file-paths/
 12. https://www.geeksforgeeks.org/python-program-to-convert-a-list-to-string/
 """
-
