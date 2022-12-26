@@ -12,6 +12,7 @@ import shutil
 import glob
 
 # folder paths
+sourceXC_path = r'T:\Xceedance\JEM\2022'
 source_path = r'U:\WORKS\Acc_Tools\PJAC06 - Files_Automation\JEM_test_files\JEM2022\source'
 destination_path = r'U:\WORKS\Acc_Tools\PJAC06 - Files_Automation\JEM_test_files\JEM2022\destination'
 
@@ -52,8 +53,8 @@ def genFolders(res):
         if len(digitList) > 0:
             tempStr = digitList[0]
             digit = int(re.findall(r'\d+', tempStr)[0])
-        if digit != -1 and len(digitList) > 0 and len(re.findall("_R[0-9]+", key)) == 1 and not os.path.exists(os.path.join(destination_path, value, "Revised_" + str(digit))):
-            Rs_folder = os.path.join(destination_path, value, "Revised_" + str(digit))
+        if digit != -1 and len(digitList) > 0 and len(re.findall("_R[0-9]+", key)) == 1 and not os.path.exists(os.path.join(destination_path, value, "Revision_" + str(digit))):
+            Rs_folder = os.path.join(destination_path, value, "Revision_" + str(digit))
             os.mkdir(Rs_folder)
             if os.path.exists(Rs_folder):
                 for i in range(len(subFolders)):
@@ -74,8 +75,8 @@ def genFolders(res):
                     subFolder = os.path.join(Org_folder, subFolders[i])
                     os.mkdir(subFolder)
 
-def originalRevisedAbbr(string):
-    pattern = r'Revised_(\d+)|Original'
+def originalRevisionAbbr(string):
+    pattern = r'Revision_(\d+)|Original'
     matches = re.findall(pattern, string)
     extracted_strings = []
     for match in matches:
@@ -90,7 +91,7 @@ def originalRevisedAbbr(string):
 versions, names = genFolderNames(source_path, destination_path)
 res = oldNewNamesDict(versions)
 genFolders(res)
-
+temp = []
 
 for key, value in res.items():
     for file in glob.glob(os.path.join(source_path, key, '*.xlsx')):
@@ -99,11 +100,11 @@ for key, value in res.items():
         # cur_file should be a list: len(list) >= 1
         curFolder = glob.glob(os.path.join(destination_path, value, '*/Final'))
         for i in curFolder:
-            # find an account version: Original, Revised_12345
+            # find an account version: Original, Revision_12345
             accVersion = i.split(os.sep)[-2]
             # find an accout version abbreviation 
-            #accVersionAbbr = accVersion[::len(accVersion)-1] #limitation: Revised_9 is a maximum
-            accVersionAbbr = originalRevisedAbbr(accVersion)
+            #accVersionAbbr = accVersion[::len(accVersion)-1] #limitation: Revision_9 is a maximum
+            accVersionAbbr = originalRevisionAbbr(accVersion)
             # a file path
             copiedFileName = os.path.join(i, excelFileName)
             # ensure each src_version = dest_version and a reoprt isn't existing
@@ -116,23 +117,27 @@ for key, value in res.items():
         # cur_file should be a list: len(list) >= 1
         curFolder = glob.glob(os.path.join(destination_path, value, '*/Working'))
         for j in curFolder:
-            # find an account version: Original, Revised_12345
+            # find an account version: Original, Revision_12345
             accVersion = j.split(os.sep)[-2]
             # find an accout version abbreviation 
-            #accVersionAbbr = accVersion[::len(accVersion)-1] #limitation: Revised_9 is a maximum
-            accVersionAbbr = originalRevisedAbbr(accVersion)
+            #accVersionAbbr = accVersion[::len(accVersion)-1] #limitation: Revision_9 is a maximum
+            accVersionAbbr = originalRevisionAbbr(accVersion)
             # a file path
             copiedFileName = os.path.join(j, textDataName)
             # ensure each src_version = dest_version and a reoprt isn't existing
             if not os.path.exists(copiedFileName) and len(re.findall("Original", accVersion)) == 1 and len(re.findall("R[0-9]+", textDataName)) < 1 and textDataName != "PAPILog.txt" and textDataName != "RMSLog.txt":
                 shutil.copy(data, copiedFileName)
             elif not os.path.exists(copiedFileName) and len(re.findall(accVersionAbbr, textDataName)) == 1 and textDataName != "PAPILog.txt" and textDataName != "RMSLog.txt":
-                shutil.copy(data, copiedFileName)       
+                shutil.copy(data, copiedFileName)
 
+    #for xcFile in glob.glob(os.path.join(sourceXC_path, '*', '*', 'Source', '*')):
+        #if os.path.isdir(xcFile):
+            #print(xcFile)
+    #for xcFile in os.listdir(sourceXC_path):
+        #if os.path.isdir(os.path.join(sourceXC_path, xcFile)):
+            #temp.append(xcFile)
 
-
-
-
+#print(temp)
 
 
 print("ENDEND!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")

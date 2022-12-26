@@ -66,7 +66,7 @@ def genFolders(res):
                 for i in range(len(subFolders)):
                     subFolder = os.path.join(Org_folder, subFolders[i])
                     os.mkdir(subFolder)
-        elif key.lower().count("_op") == 1 and len(re.findall("_R[0-9]+_", key)) == 0 and not os.path.exists(os.path.join(destination_path, value, "Original")):
+        elif key.lower().count("_op") == 1 and len(re.findall("_R[0-9]+", key)) == 0 and not os.path.exists(os.path.join(destination_path, value, "Original")):
             Org_folder = os.path.join(destination_path, value, "Original")
             os.mkdir(Org_folder)
             if os.path.exists(Org_folder):
